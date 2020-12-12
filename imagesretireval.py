@@ -6,6 +6,7 @@ import pandas as pd
 
 img_format = ['jpg', 'png', 'gif', 'jpeg']
 h = 0
+
 for frmt in img_format:
     for img_name in glob.glob('*.' + frmt):
         img = cv.imread(img_name)
@@ -23,9 +24,9 @@ for frmt in img_format:
             hist_rn[i] = hist_r[i][0]
 
         df = pd.DataFrame({'name': img_name,
-                            'Blue': hist_bn,
-                            'Green': hist_gn,
-                            'Red': hist_rn})
+                            'Blue': [hist_bn],
+                            'Green': [hist_gn],
+                            'Red': [hist_rn]})
         if h == 0:
             df.to_csv('my_csv.csv', index=False)
             h = 1
