@@ -51,13 +51,13 @@ def distanceHistogram(dataNum, dataSetHist):
     pointer = 0
     # create Array for Distances
     dist = np.zeros((dataNum, 3, 256))  # number of image on the dataset
-    for i in range(len(dataset_hist) + 1):
+    for i in range(len(dataSetHist) + 1):
         if i > 0 and i % 256 == 0:  # To prevent redundancy 256 for one image ONLY ONE PERIOD
             if pointer > (dataNum):
                 break
 
             for colors in range(1, 4):
-                num = dataset_hist.iloc[j:i, colors]  # to take colors of image columns
+                num = dataSetHist.iloc[j:i, colors]  # to take colors of image columns
                 for value in range(j, i):  # to take value of colors columns
                     m = value - (256 * (pointer))
 
@@ -68,7 +68,7 @@ def distanceHistogram(dataNum, dataSetHist):
 
     distance = np.zeros(dataNum)
     # sum distance
-    for x in range(data_num):
+    for x in range(dataNum):
         distance[x] = sum(dist[x][0]) + sum(dist[x][1]) + sum(dist[x][2])
     indices = np.argsort(distance)  # ascending order
     return indices
@@ -77,10 +77,10 @@ def distanceHistogram(dataNum, dataSetHist):
 def topTenImages(path):
     #  takes name of the image once
     image_names = []
-    names = dataset_hist.iloc[0:(len(dataset_hist) + 1):256, 0]
+    names = dataSetHist.iloc[0:(len(dataSetHist) + 1):256, 0]
 
     # create new array Takes names of images with index = zero for number of image
-    for z in range(data_num):
+    for z in range(dataNum):
         image_names.append(names[z * 256])
 
     # save the path of similar images to read and present them
@@ -101,10 +101,12 @@ def topTenImages(path):
 
 
 if __name__ == '__main__':
-    dataSetHistograms('Dataset', 'dataset')
-    dataset_hist = pd.read_csv('Dataset/dataset.csv')
-    data_num = int(len(dataset_hist) / 256)
-    histQuery = histQueryImage('Dataset/2173.jpg')
-    distance = distanceHistogram(data_num, dataset_hist)
+    data_set_path = "Dataset\\"
+    name_path ="dataset"
+    dataSetHistograms(data_set_path, name_path)
+    dataSetHist = pd.read_csv("Dataset\\dataset.csv")
+    dataNum = int(len(dataSetHist) / 256)
+    histQuery = histQueryImage("Dataset\\3551.jpg")
+    distance = distanceHistogram(dataNum, dataSetHist)
     top_ten = distance[:10]
-    view_result = topTenImages('Dataset/')
+    view_result = topTenImages("Dataset/")
