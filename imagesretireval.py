@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import glob
 import pandas as pd
-
+import os
 
 def dataSetHistograms(path, name):
     img_format = ['jpg', 'png', 'jpeg']
@@ -101,12 +101,11 @@ def topTenImages(path):
 
 
 if __name__ == '__main__':
-    data_set_path = "Dataset\\"
-    name_path ="dataset"
-    dataSetHistograms(data_set_path, name_path)
+    dataSetHistograms("Dataset\\", "dataset")
     dataSetHist = pd.read_csv("Dataset\\dataset.csv")
     dataNum = int(len(dataSetHist) / 256)
-    histQuery = histQueryImage("Dataset\\3551.jpg")
+    imagePath = input('Please input the path of image : ')
+    histQuery = histQueryImage(f"Dataset\\{imagePath}.")
     distance = distanceHistogram(dataNum, dataSetHist)
     top_ten = distance[:10]
-    view_result = topTenImages("Dataset/")
+    topTenImages("Dataset/")
