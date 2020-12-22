@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import glob
 import pandas as pd
-import os
+
 
 def dataSetHistograms(path, name):
     img_format = ['jpg', 'png', 'jpeg']
@@ -96,16 +96,16 @@ def topTenImages(path):
     img_h2 = np.hstack((img1[5], img1[6], img1[7], img1[8], img1[9]))
     img_vh = np.vstack((img_h1, img_h2))
 
-    cv.imshow('image1', img_vh)
+    cv.imshow('The most 10 similar images', img_vh)
     cv.waitKey(0)
 
 
 if __name__ == '__main__':
-    dataSetHistograms("Dataset\\", "dataset")
+    #dataSetHistograms("Dataset\\", "dataset")  ## save data histogram and create file.csv
     dataSetHist = pd.read_csv("Dataset\\dataset.csv")
     dataNum = int(len(dataSetHist) / 256)
-    imagePath = input('Please input the path of image : ')
-    histQuery = histQueryImage(f"Dataset\\{imagePath}.")
+    imagePath = input('Please input the path of image : ') # input full path
+    histQuery = histQueryImage(f"{imagePath}.")
     distance = distanceHistogram(dataNum, dataSetHist)
     top_ten = distance[:10]
     topTenImages("Dataset/")
